@@ -66,8 +66,8 @@ def generate_video():
   
     
     # save the input files to disk
-    image_path = '/examples/audio.wav'
-    audio_path = '/tmp/obama2.wav'
+    image_path = 'examples/audio.wav'
+    audio_path = 'examples/obama2.wav'
     
     # generate the output video
     output_path = calculate(image_path, audio_path)
