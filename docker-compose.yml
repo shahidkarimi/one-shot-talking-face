@@ -5,8 +5,10 @@ services:
       container_name: one-shot-face-presence
       volumes:
          - ./examples:/content/examples
+         - ./app.py:/content/app.py
       environment:
         - POSTGRES_USER=postgres
       ports:
        - "7860:7860"
        - "7000:8000"
+      runtime: nvidia
