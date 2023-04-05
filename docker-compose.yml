@@ -1,0 +1,12 @@
+version: "3.1"
+services:
+    bewhy-system:
+      image: kasal
+      container_name: one-shot-face-presence
+      volumes:
+         - ./examples:/content/examples
+      environment:
+        - POSTGRES_USER=postgres
+      ports:
+       - "7860:7860"
+       - "7000:8000"

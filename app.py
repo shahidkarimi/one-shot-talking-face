@@ -51,11 +51,7 @@ def run():
           btn = gr.Button("Generate")          
 
     examples = gr.Examples(examples=[
-      ["./examples/monalisa.jpg", "./examples/obama2.wav"],
-      ["./examples/monalisa.jpg", "./examples/trump.wav"],
-      ["./examples/o2.jpg", "./examples/obama2.wav"],
-      ["./examples/o2.jpg", "./examples/trump.wav" ],
-      ["./examples/image.png", "./examples/audio.wav"],
+      
     ], fn=calculate, inputs=[image_in, audio_in], outputs=[video_out], cache_examples=True)
 
     btn.click(calculate, inputs=[image_in, audio_in], outputs=[video_out])
