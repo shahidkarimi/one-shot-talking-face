@@ -2,7 +2,7 @@ import gradio as gr
 import os, subprocess, torchaudio
 import torch
 from PIL import Image
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 
 app = Flask(__name__)
 
@@ -73,7 +73,7 @@ def generate_video():
     output_path = calculate(image_path, audio_path)
     
     # return the path to the output video as a JSON response
-    return jsonify({'output_path': output_path})
+    return send_file(output_path, mimetype='application/octet-stream')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=7860)
