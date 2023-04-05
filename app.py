@@ -52,7 +52,7 @@ def run():
 
     examples = gr.Examples(examples=[
       
-    ], fn=calculate, inputs=[image_in, audio_in], outputs=[video_out], cache_examples=True, api_name="addition")
+    ], fn=calculate, inputs=[image_in, audio_in], outputs=[video_out], cache_examples=True)
 
     btn.click(calculate, inputs=[image_in, audio_in], outputs=[video_out])
     block.queue()
