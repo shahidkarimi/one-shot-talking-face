@@ -2,9 +2,6 @@ import gradio as gr
 import os, subprocess, torchaudio
 import torch
 from PIL import Image
-from flask import Flask, jsonify, request
-
-app = Flask(__name__)
 
 block = gr.Blocks()
 
@@ -61,19 +58,5 @@ def run():
     block.queue()
     block.launch(server_name="0.0.0.0", server_port=7860)
 
-@app.route('/generate_video', methods=['GET'])
-def generate_video():
-  
-    
-    # save the input files to disk
-    image_path = '/examples/audio.wav'
-    audio_path = '/tmp/obama2.wav'
-    
-    # generate the output video
-    output_path = calculate(image_path, audio_path)
-    
-    # return the path to the output video as a JSON response
-    return jsonify({'output_path': output_path})
-
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=7860)
+    run()
