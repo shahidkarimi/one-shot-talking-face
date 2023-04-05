@@ -3,6 +3,7 @@ import os, subprocess, torchaudio
 import torch
 from PIL import Image
 from flask import Flask, jsonify, request, send_file
+import time
 
 app = Flask(__name__)
 
@@ -21,7 +22,7 @@ def pad_image(image):
         new_image.paste(image, ((h - w) // 2, 0))
         return new_image
 
-def calculate(image_in, audio_in):
+def calculate(image_in, audio_in, ts):
     waveform, sample_rate = torchaudio.load(audio_in)
     waveform = torch.mean(waveform, dim=0, keepdim=True)
     torchaudio.save("/content/audio.wav", waveform, sample_rate, encoding="PCM_S", bits_per_sample=16)
@@ -34,8 +35,8 @@ def calculate(image_in, audio_in):
     with open("test.json", "w") as f:
         f.write(jq_run.stdout.decode('utf-8').strip())
 
-    os.system(f"cd /content/one-shot-talking-face && python3 -B test_script.py --img_path /content/image.png --audio_path /content/audio.wav --phoneme_path /content/test.json --save_dir /content/train")
-    return "/content/train/image_audio.mp4"
+    os.system(f"cd /content/one-shot-talking-face && python3 -B test_script.py --img_path /content/image.png --audio_path /content/audio.wav --phoneme_path /content/test.json --save_dir /content/train/{ts}")
+    return f"/content/train/{ts}/image_audio.mp4"
     
 def run():
   with block:
@@ -61,16 +62,19 @@ def run():
     block.queue()
     block.launch(server_name="0.0.0.0", server_port=7860)
 
-@app.route('/generate_video', methods=['GET'])
+@app.route('/generate_video', methods=['POST'])
 def generate_video():
-  
+
+    ts = int(time.time())
     
+    file = request.files['audio']
     # save the input files to disk
     image_path = 'examples/image.png'
-    audio_path = 'examples/obama2.wav'
+    audio_path = f'examples/{ts}.wav'
+    file.save(audio_path) #'examples/obama2.wav'
     
     # generate the output video
-    output_path = calculate(image_path, audio_path)
+    output_path = calculate(image_path, audio_path, ts)
     
     # return the path to the output video as a JSON response
     return send_file(output_path, mimetype='application/octet-stream')
