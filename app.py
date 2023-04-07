@@ -68,8 +68,9 @@ def generate_video():
     ts = int(time.time())
     
     file = request.files['audio']
+    voice_id = request.form['voice_id']
     # save the input files to disk
-    image_path = 'examples/image.png'
+    image_path = f'examples/{voice_id}.png'
     audio_path = f'examples/{ts}.wav'
     file.save(audio_path) #'examples/obama2.wav'
     
