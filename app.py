@@ -80,5 +80,13 @@ def generate_video():
     # return the path to the output video as a JSON response
     return send_file(output_path, mimetype='application/octet-stream')
 
+@app.route('/upload_photo', methods=['POST'])
+def generate_video():
+    file = request.files['photo']
+    voice_id = request.args.get('voice_id')
+    # save the input files to disk
+    image_path = f'examples/{voice_id}.png'
+    file.save(image_path)
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=7860)
