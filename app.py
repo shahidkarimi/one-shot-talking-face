@@ -87,6 +87,7 @@ def upload_photo():
     # save the input files to disk
     image_path = f'examples/{voice_id}.png'
     file.save(image_path)
+    return image_path
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=7860)
