@@ -81,7 +81,7 @@ def generate_video():
     return send_file(output_path, mimetype='application/octet-stream')
 
 @app.route('/upload_photo', methods=['POST'])
-def generate_video():
+def upload_photo():
     file = request.files['photo']
     voice_id = request.args.get('voice_id')
     # save the input files to disk
