@@ -4,6 +4,7 @@ import torch
 from PIL import Image
 from flask import Flask, jsonify, request, send_file
 import time
+import logging
 
 app = Flask(__name__)
 
@@ -73,7 +74,7 @@ def generate_video():
     image_path = f'examples/{voice_id}.png'
     audio_path = f'examples/{ts}.wav'
     file.save(audio_path) #'examples/obama2.wav'
-    
+    app.logger.info(f'>>>>>> Audio saved at {audio_path}')
     # generate the output video
     output_path = calculate(image_path, audio_path, ts)
     
